@@ -1,0 +1,216 @@
+{
+    "name": "Main Input",
+    "maps": [
+        {
+            "name": "Default Action Map",
+            "id": "71019050-072a-46a8-811f-bcf7d0296234",
+            "actions": [
+                {
+                    "name": "Left_Stick",
+                    "type": "Value",
+                    "id": "05c116d0-850b-4acb-9bcc-30e6a38fead9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right_Stick",
+                    "type": "Value",
+                    "id": "ced082d6-c81e-42c2-aff2-1a7559319e6a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "North_Button",
+                    "type": "Button",
+                    "id": "4fc79605-12d4-48e9-9121-140c3182c834",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "East_Button",
+                    "type": "Button",
+                    "id": "e5d5b242-c109-4a03-9ce5-aa87616326d8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "South_Button",
+                    "type": "Button",
+                    "id": "64ddb134-7121-4fbf-be9f-23f192cd712d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "West_Button",
+                    "type": "Button",
+                    "id": "dc178459-f8c4-4308-899b-57e41c12e5f4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left_Bumper",
+                    "type": "Button",
+                    "id": "3294d689-e3ed-4b1e-91a2-2400cf75e6f0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right_Bumper",
+                    "type": "Button",
+                    "id": "765b571a-ba67-4d35-9692-fb854bd8fd8c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left_Trigger",
+                    "type": "Button",
+                    "id": "6ccb2ece-0100-4a3d-b2fb-989a8203b864",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right_Trigger",
+                    "type": "Button",
+                    "id": "66d91c61-2005-4421-a5be-163e47d08b9c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6f29ce84-6e18-42c9-9c29-b7b1a55e30ba",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Left_Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1fe5fc8-a1aa-4dd3-b728-449f4402f11c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Right_Stick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f0f97a54-9078-400f-ad8f-aa9241b076ed",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "North_Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "215a8017-cbe5-4709-a690-97329216679b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "East_Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "077d2e0a-f9d6-4e00-b0fe-e863616ef76f",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "South_Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45c6fbff-7861-4d0a-8213-9a549d0b936b",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "West_Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "71eb3849-1cba-480f-936c-89d51675d075",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Left_Bumper",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7c74a6c-4ce3-4b3a-ad14-863adcc8e198",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Right_Bumper",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "429284fe-1e07-4f36-9393-f709baea0a2d",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Left_Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "419697e3-2139-48ff-b0b5-d0f6bc6f22be",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Default",
+                    "action": "Right_Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Default",
+            "bindingGroup": "Default",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
