@@ -5,16 +5,15 @@ using UnityEngine;
 //This script will hold scene references and monitor the overall flow of the game
 public class Manager : MonoBehaviour
 {
-    [SerializeField] private Transform player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    #region Singleton
+    public static Manager Instance {get; private set;}
+    private void Awake() {
+        if(Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
+    #endregion
+    [SerializeField] private Transform playerRef;
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Vector3 GetPlayerPosition() => playerRef.position;
 }

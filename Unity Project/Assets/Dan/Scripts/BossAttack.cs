@@ -9,12 +9,10 @@ public class BossAttack : MonoBehaviour
 
     //! TEMPORY VARIALBES
     [SerializeField] private float time = 5f;
-    public Transform player;
-    PlayerLocation playerLocation;
     // Start is called before the first frame update
     void Start()
     {
-        //playerLocation  = new PlayerLocation(player);
+        
     }
 
     // Update is called once per frame
@@ -23,7 +21,7 @@ public class BossAttack : MonoBehaviour
         time -= Time.deltaTime;
         if(time <= 0){
             GameObject tempToast = Instantiate(toast, transform.position, Quaternion.identity).gameObject;
-            tempToast.GetComponent<Toast>().StartUp(player.position);
+            tempToast.GetComponent<Toast>().StartUp(Manager.Instance.GetPlayerPosition());
             time = 5f;
         }
     }
