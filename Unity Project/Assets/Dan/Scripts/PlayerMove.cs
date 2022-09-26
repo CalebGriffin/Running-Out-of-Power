@@ -8,25 +8,25 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Laser laser;
     private Animator anim;
     private GameObject attackObj;
 
     [Header("Values")]
     [SerializeField] private float speed;
+    private Vector3 direction; 
     
     private void Awake() {
         //Get the first child 
-        attackObj = transform.GetChild(0).gameObject;
+        //attackObj = transform.GetChild(0).gameObject;
         anim = GetComponent<Animator>();
     }
     private void Start() {
-        attackObj.SetActive(false);
+        //attackObj.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Update() {
+        transform.position += direction * speed * Time.deltaTime;
     }
     private void OnLeft_Stick(InputValue value)
     {
@@ -34,9 +34,10 @@ public class PlayerMove : MonoBehaviour
         Vector2 inputVector = value.Get<Vector2>();
 
         // Do something with the input here
-        inputVector.y = 0;
-        Debug.Log("Detecting Controller");
-        rb.velocity = inputVector * speed;
+        
+        //Only need the x axis
+        direction.x = inputVector.x;
+        
 
         //Control the rotation of the robot
         if(inputVector.x < 0) transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
@@ -52,7 +53,8 @@ public class PlayerMove : MonoBehaviour
     {
         // This will run when the south button is pressed
         Debug.Log("Running");
-        attackObj.SetActive(true);
+        Instantiate(laser, transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+        //attackObj.SetActive(true);
     }
     private void SetAnimationState(bool condition) => anim.SetBool("isMoving", condition);
 }
