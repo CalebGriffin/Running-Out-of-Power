@@ -92,6 +92,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnEast_Button()
     {
         // This will run when the east button is pressed
-        CubeController.Instance.rotateNext();
+        CubeController.Instance.RotateNext();
     }
 }

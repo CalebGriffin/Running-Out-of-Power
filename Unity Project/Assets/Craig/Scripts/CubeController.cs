@@ -16,6 +16,7 @@ public class CubeController : MonoBehaviour
     [SerializeField] private float rotationAngle = 90.0f;
     [SerializeField] private float rotationLerpDuration = 3.0f;
     [SerializeField] private List<Vector3> rotationSequence;
+    [SerializeField] private List<Transform> spawnPoints;
 
     private int rotationSequenceIndex = 0;
     private Vector3 eulerLerpOutput = Vector3.zero;
@@ -39,8 +40,8 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
 
         if (rotationSequence.Count <= 0)
@@ -92,7 +93,12 @@ public class CubeController : MonoBehaviour
         cubeState = CubeStates.STATIC;
     }
 
-    public void rotateNext()
+    public Transform GetSpawnPoint()
+    {
+        return spawnPoints[rotationSequenceIndex];
+    }
+
+    public void RotateNext()
     {
         if (cubeState == CubeStates.ROTATING) return;
         
