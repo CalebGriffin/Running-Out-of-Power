@@ -6,6 +6,11 @@ public class Blocks : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float speed;
+
+    private string position;
+    public string Position {get {return position;} set {position = value;}}
+
+
     [SerializeField] private int id;
     public int Id {get; private set;}
     // Update is called once per frame
@@ -15,6 +20,6 @@ public class Blocks : MonoBehaviour
     }
     private void FixedUpdate() {
         rb.velocity = Vector2.down * speed * Time.deltaTime;
-        Debug.Log("Running");
+        
     }
 }

@@ -8,12 +8,9 @@ public class Battery : MonoBehaviour
     //Matching the blocks to the correct colours will increase the battery by 10 
     //Incorrect matches will decrease by 10
     [SerializeField] private static float batteryLife;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private void Start() {
+        batteryLife = 100f;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -21,5 +18,5 @@ public class Battery : MonoBehaviour
         transform.localScale = new Vector3(1, Mathf.Clamp01(batteryLife / 100), 1);
     }
 
-    public static void  UpdateBatteryLife(float batteryValue) => batteryLife += batteryValue;
+    public static void UpdateBatteryLife(float batteryValue) => batteryLife = Mathf.Clamp(batteryLife += batteryValue, 0, 100);
 }

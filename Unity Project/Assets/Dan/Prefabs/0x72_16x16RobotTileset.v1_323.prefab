@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -529207391887993114}
   m_Layer: 7
   m_Name: 0x72_16x16RobotTileset.v1_323
-  m_TagString: Untagged
+  m_TagString: blueBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -529207391887993114}
-  speed: 100
+  speed: 10
+  id: 0
 --- !u!50 &-529207391887993114
 Rigidbody2D:
   serializedVersion: 4

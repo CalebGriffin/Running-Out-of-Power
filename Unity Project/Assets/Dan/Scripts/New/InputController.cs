@@ -10,11 +10,11 @@ public class InputController : MonoBehaviour
     private Container container1;
     private Container container2;
     private Container activeContainer;
-    public Container ActiveContainer {get; private set;}
+    public Container ActiveContainer {get {return activeContainer;} private set {activeContainer = value;}}
     private void Start() {
         //Left: -6.45, Right: -4.55
-        container1 = new Container(0, -6.45f, -4.55f, bluebox, redbox);
-        container2 = new Container(1, 4.5f, 6.45f, bluebox, redbox);
+        container1 = new Container(-4.55f, -6.45f, -4.55f, bluebox, redbox);
+        container2 = new Container(4.5f, 4.5f, 6.45f, bluebox, redbox);
         activeContainer = container1;
     }
 
@@ -31,7 +31,7 @@ public class InputController : MonoBehaviour
     private void OnSouth_Button()
     {
         // This will run when the south button is pressed
-        Debug.Log("Running");
+        
         
         activeContainer.SwitchBlocks();
     }

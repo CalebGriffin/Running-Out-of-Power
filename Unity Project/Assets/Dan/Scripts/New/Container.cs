@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Container 
 {
-    private int blockId;
+    private float desiredPosition;
     private Transform[,] blocks = new Transform[10, 2];
-    public Container(int blockId, float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
-        this.blockId = blockId;
+    public Container(float desiredPosition, float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
+        this.desiredPosition = desiredPosition;
         CreateContainerBlocks(leftSide, rightSide, blueBlock, redBlock);
     }
 
@@ -41,5 +41,5 @@ public class Container
     //The blue block and the orange block will have ids (blue 0, orange 1)
     //The container's block id will determine which block it wants on the left hand side
     //E.G. if this container has an id of 0 it wants the blue blocks to land on the left side
-    public int GetBlockId() => blockId;
+    public bool AreBlocksPlacedCorrectly(float position) => desiredPosition == position ? true : false;
 }

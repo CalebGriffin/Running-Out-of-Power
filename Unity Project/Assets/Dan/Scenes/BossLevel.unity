@@ -678,6 +678,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9912ed04ee53d4a8ffc948cbbf3009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputController: {fileID: 509497828}
+  correctValue: 50
+  incorrectValue: -50
 --- !u!1 &598654671
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,7 +842,7 @@ GameObject:
   m_Layer: 0
   m_Name: Battery
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -855,7 +858,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62aa4a443c207404ab308dd0fd06b86b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  batteryLife: 100
 --- !u!4 &767013245
 Transform:
   m_ObjectHideFlags: 0
@@ -864,7 +866,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767013243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.25, z: 0}
+  m_LocalPosition: {x: 0, y: -1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1409772925}
@@ -1467,7 +1469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409772924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.95, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1.8, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 767013245}
