@@ -10,10 +10,11 @@ public class InputController : MonoBehaviour
     private Container container1;
     private Container container2;
     private Container activeContainer;
+    public Container ActiveContainer {get; private set;}
     private void Start() {
         //Left: -6.45, Right: -4.55
-        container1 = new Container(-6.45f, -4.55f, bluebox, redbox);
-        container2 = new Container(4.5f, 6.45f, bluebox, redbox);
+        container1 = new Container(0, -6.45f, -4.55f, bluebox, redbox);
+        container2 = new Container(1, 4.5f, 6.45f, bluebox, redbox);
         activeContainer = container1;
     }
 
@@ -24,7 +25,7 @@ public class InputController : MonoBehaviour
 
         // Do something with the input here
         activeContainer = inputVector.x < 0 ? container1 : container2;
-        transform.position = new Vector3(inputVector.x < 0 ? -5.5f : 5.5f, 0, 0);
+        transform.position = new Vector3(inputVector.x < 0 ? -5.5f : 5.5f, -1, 0);
     }
 
     private void OnSouth_Button()
@@ -33,8 +34,5 @@ public class InputController : MonoBehaviour
         Debug.Log("Running");
         
         activeContainer.SwitchBlocks();
-        //float tempX = redbox.position.x;
-        //redbox.position = new Vector3(bluebox.position.x, redbox.position.y, 0);
-        //bluebox.position = new Vector3(tempX, bluebox.position.y, 0);
     }
 }

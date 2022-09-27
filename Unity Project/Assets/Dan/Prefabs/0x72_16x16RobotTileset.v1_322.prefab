@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7551785515474464140}
   - component: {fileID: 7551785515474464141}
   - component: {fileID: 7551785515474464139}
-  m_Layer: 0
+  - component: {fileID: 6726358234352164537}
+  m_Layer: 7
   m_Name: 0x72_16x16RobotTileset.v1_322
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,3 +124,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8955baed074f584a9bae5faf2f66038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 6726358234352164537}
+  speed: 100
+  id: 1
+--- !u!50 &6726358234352164537
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7551785515474464143}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
