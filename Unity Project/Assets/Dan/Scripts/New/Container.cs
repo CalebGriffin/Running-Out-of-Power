@@ -38,8 +38,5 @@ public class Container
             //blocks[i, 1].position = temp;
         }
     }
-    //The blue block and the orange block will have ids (blue 0, orange 1)
-    //The container's block id will determine which block it wants on the left hand side
-    //E.G. if this container has an id of 0 it wants the blue blocks to land on the left side
     public bool AreBlocksPlacedCorrectly(float position) => desiredPosition == position ? true : false;
 }
