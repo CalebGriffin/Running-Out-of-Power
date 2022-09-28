@@ -200,5 +200,6 @@ public class ArrowInput : MonoBehaviour
     private void GameOver()
     {
         //TODO: Talk to Craig about what to do when the game is over
+        LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, $"You got a score of: {score}");
     }
 }
