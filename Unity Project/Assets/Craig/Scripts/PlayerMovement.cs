@@ -138,14 +138,14 @@ public class PlayerMovement : MonoBehaviour
             jumpCount++;
             southPressed = true;
         }
-
+        
         
     }
 
     private void OnEast_Button()
     {
         // This will run when the east button is pressed
-        //CubeController.Instance.RotateNext();
+        CubeController.Instance.RotateNext();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
