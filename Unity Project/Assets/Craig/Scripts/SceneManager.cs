@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public static class SceneManager
 {
-    public enum Levels
+    public enum Levels : int
     {
         MENU = 0,
         LEVEL1,
@@ -19,7 +20,7 @@ public static class SceneManager
 
     private static List<LevelInfo> levels = new List<LevelInfo>();
 
-    private static SceneManager.Levels currentLevel = 0;
+    private static SceneManager.Levels currentLevel = Levels.LEVEL1;
 
     public static Levels CurrentLevel { get => currentLevel; }
 
@@ -31,18 +32,8 @@ public static class SceneManager
     public static void LoadLevel(SceneManager.Levels level, string displayText = "")
     {
         currentLevel = level;
-
-    }
-
-
-    public static void ReturnToMenu()
-    {
-        
-    }
-
-    public static void ReturnToMenu(string displayText)
-    {
-
+        levels[(int)level].menuAchievementInfo = displayText;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(levels[(int)level].sceneName);
     }
 
 }

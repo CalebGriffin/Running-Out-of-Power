@@ -130,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
         if(touchingLevelLoader)
         {
             Debug.Log("Load Next Level");
+            LevelLoader.Instance.StartTransition(SceneManager.Levels.LEVEL1);
             return;
         }
 
