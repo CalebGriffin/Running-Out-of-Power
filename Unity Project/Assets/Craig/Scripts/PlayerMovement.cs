@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool leftPressed = false;
     private bool rightPressed = false;
     private bool southPressed = false;
+    private bool touchingLevelLoader = false;
 
     private float groundedTimer = 0.0f;
     [SerializeField] private bool grounded = false;
@@ -125,6 +126,13 @@ public class PlayerMovement : MonoBehaviour
     {
         // This will run when the south button is pressed
         Debug.Log("South Button Pressed");
+
+        if(touchingLevelLoader)
+        {
+            Debug.Log("Load Next Level");
+            return;
+        }
+
         if((southPressed == false) & (jumpCount < maxInAirJumps))
         {
             jumpCount++;
@@ -138,5 +146,21 @@ public class PlayerMovement : MonoBehaviour
     {
         // This will run when the east button is pressed
         //CubeController.Instance.RotateNext();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "LevelLoader")
+        {
+            touchingLevelLoader = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "LevelLoader")
+        {
+            touchingLevelLoader = false;
+        }
     }
 }
