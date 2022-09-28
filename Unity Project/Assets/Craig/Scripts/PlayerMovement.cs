@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private bool rightPressed = false;
     private bool southPressed = false;
     private bool touchingLevelLoader = false;
+    private SceneManager.Levels levelToLoad;
 
     private float groundedTimer = 0.0f;
     [SerializeField] private bool grounded = false;
@@ -91,35 +92,46 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnLeft_Stick(InputValue value)
     {
-        // Get the Vector2 from the input value
         Vector2 inputVector = value.Get<Vector2>();
         Debug.Log("Left Stick: " + inputVector.ToString());
-        if(checkOutsideDeadband(inputVector.x, stickDeadbandThreshold))
+        switch (GameManager.Instance.GameState)
         {
-            if(inputVector.x < 0)
-            {
-                leftPressed = true;
-            }
-            else
-            {
-                rightPressed = true;
-            }
+            case GameManager.GameStates.PLAYING:
+                // Get the Vector2 from the input value
+                
+                if (checkOutsideDeadband(inputVector.x, stickDeadbandThreshold))
+                {
+                    if (inputVector.x < 0)
+                    {
+                        leftPressed = true;
+                    }
+                    else
+                    {
+                        rightPressed = true;
+                    }
+                }
+                else
+                {
+                    leftPressed = false;
+                    rightPressed = false;
+                }
+                break;
+            case GameManager.GameStates.PAUSED:
+                break;
+            case GameManager.GameStates.SWITCHING_FACE:
+                break;
+            case GameManager.GameStates.WIN:
+                break;
+            case GameManager.GameStates.GAME_OVER:
+                leftPressed = false;
+                rightPressed = false;
+                break;
+            case GameManager.GameStates.NUM_OF_STATES:
+            default:
+                break;
         }
-        else
-        {
-            leftPressed = false;
-            rightPressed = false;
-        }
+        
 
-    }
-
-    // Gives an argument for a Vector2 for the direction in which the joystick is being pressed
-    private void OnRight_Stick(InputValue value)
-    {
-        // Get the Vector2 from the input value
-        Vector2 inputVector = value.Get<Vector2>();
-        Debug.Log("Right Stick: " + inputVector.ToString());
-        // Do something with the input here
     }
 
     private void OnSouth_Button()
@@ -127,26 +139,43 @@ public class PlayerMovement : MonoBehaviour
         // This will run when the south button is pressed
         Debug.Log("South Button Pressed");
 
-        if(touchingLevelLoader)
+        switch (GameManager.Instance.GameState)
         {
-            Debug.Log("Load Next Level");
-            LevelLoader.Instance.StartTransition(SceneManager.Levels.LEVEL1);
-            return;
+            case GameManager.GameStates.PLAYING:
+                if (touchingLevelLoader)
+                {
+                    Debug.Log("Load Next Level");
+                    SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).levelPlayed = true;
+                    LevelLoader.Instance.StartTransition(CubeController.Instance.CurrentFaceLevel);
+                    return;
+                }
+
+                if ((southPressed == false) & (jumpCount < maxInAirJumps))
+                {
+                    jumpCount++;
+                    southPressed = true;
+                }
+                break;
+            case GameManager.GameStates.PAUSED:
+                break;
+            case GameManager.GameStates.SWITCHING_FACE:
+                break;
+            case GameManager.GameStates.WIN:
+                break;
+            case GameManager.GameStates.GAME_OVER:
+                LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU);
+                break;
+            case GameManager.GameStates.NUM_OF_STATES:
+            default:
+                break;
         }
 
-        if((southPressed == false) & (jumpCount < maxInAirJumps))
-        {
-            jumpCount++;
-            southPressed = true;
-        }
-        
-        
     }
 
     private void OnEast_Button()
     {
         // This will run when the east button is pressed
-        CubeController.Instance.RotateNext();
+        //CubeController.Instance.RotateNext();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -154,6 +183,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "LevelLoader")
         {
             touchingLevelLoader = true;
+            levelToLoad = other.GetComponent<LevelLoaderScreen>().LevelID;
+            GameManager.Instance.UpdateInfo(SceneManager.GetLevelInfo(levelToLoad));
         }
     }
 
@@ -162,6 +193,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "LevelLoader")
         {
             touchingLevelLoader = false;
+            levelToLoad = SceneManager.Levels.MENU;
+            GameManager.Instance.UpdateInfo(SceneManager.GetLevelInfo(levelToLoad));
         }
     }
 }

@@ -140,11 +140,11 @@ public class LightingController : MonoBehaviour
 
     [SerializeField] List<LightFader> lights;
     [SerializeField] private TextMeshPro menuText;
-    private float menuTextGlowDefault;
+    [SerializeField] private float menuTextGlowDefault;
 
     private static LightingController instance;
 
-    [SerializeField] private LightingState lightingState = LightingState.LIGHTS_ON;
+    [SerializeField] private LightingState currentLightingState = LightingState.LIGHTS_ON;
 
     public static LightingController Instance
     {
@@ -155,6 +155,8 @@ public class LightingController : MonoBehaviour
         }
     }
 
+    public LightingState CurrentLightingState { get => currentLightingState;}
+
     public void AddLight(LightFader lightFader)
     {
         lights.Add(lightFader);
@@ -162,14 +164,14 @@ public class LightingController : MonoBehaviour
 
     public void SetLightsToReduce(float duration)
     {
-        if (lightingState != LightingState.LIGHTS_ON) return;
+        if (currentLightingState != LightingState.LIGHTS_ON) return;
         
         foreach(LightFader lightFader in lights)
         {
             lightFader.StartLightBehaviour(duration);
         }
         
-        lightingState = LightingState.LIGHTS_CHANGING;
+        currentLightingState = LightingState.LIGHTS_CHANGING;
     }
 
     public void ResetLights()
@@ -179,20 +181,23 @@ public class LightingController : MonoBehaviour
             lightFader.ResetLight();
             
         }
-        menuText.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, menuTextGlowDefault);
-        lightingState = LightingState.LIGHTS_ON;
+        
+        //menuText.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, menuTextGlowDefault);
+        menuText.fontSharedMaterial.SetFloat(ShaderUtilities.ID_GlowPower, menuTextGlowDefault);
+        currentLightingState = LightingState.LIGHTS_ON;
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-        menuTextGlowDefault = menuText.fontMaterial.GetFloat(ShaderUtilities.ID_GlowPower);
+        //menuTextGlowDefault = menuText.fontMaterial.GetFloat(ShaderUtilities.ID_GlowPower);
+        ResetLights();
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (lightingState)
+        switch (currentLightingState)
         {
             case LightingState.LIGHTS_OFF:
                 break;
@@ -209,8 +214,9 @@ public class LightingController : MonoBehaviour
 
                 if (lightsCompleted == lights.Count)
                 {
-                    menuText.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
-                    lightingState = LightingState.LIGHTS_OFF;
+                    //menuText.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
+                    menuText.fontSharedMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
+                    currentLightingState = LightingState.LIGHTS_OFF;
                 }
 
                 break;
