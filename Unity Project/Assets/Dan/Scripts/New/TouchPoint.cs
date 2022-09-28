@@ -24,6 +24,7 @@ public class TouchPoint : MonoBehaviour
             }
             else{
                 Battery.UpdateBatteryLife(incorrectValue);
+                ScreenShake.Instance.Shake(4);
                 Debug.Log("Incorrect");
             }
 
