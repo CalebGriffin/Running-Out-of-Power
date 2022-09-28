@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LightFader playerLightFader;
+
+        SceneManager.AddLevel("Arrow Game", "ArrowGame", "", "");
+
+
+
         player = Instantiate(playerPrefab, CubeController.Instance.GetSpawnPoint());
 
         playerLightFader = player.GetComponentInChildren<LightFader>();
