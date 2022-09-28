@@ -19,15 +19,16 @@ public static class SceneManager
 
     private static List<LevelInfo> levels = new List<LevelInfo>();
 
-    public static int currentLevel = 0;
+    private static SceneManager.Levels currentLevel = 0;
 
+    public static Levels CurrentLevel { get => currentLevel; }
 
     public static void AddLevel(string name, string sceneName, string menuDisplayInfo = "", string menuAchievementInfo = "")
     {
         levels.Add(new LevelInfo(name, sceneName, menuDisplayInfo, menuAchievementInfo));
     }
 
-    public static void LoadLevel(int level)
+    public static void LoadLevel(SceneManager.Levels level, string displayText = "")
     {
         currentLevel = level;
 
