@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - blueBlock
+  - LevelLoader
   layers:
   - Default
   - TransparentFX
