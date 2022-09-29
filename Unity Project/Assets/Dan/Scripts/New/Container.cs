@@ -15,7 +15,7 @@ public class Container
         int startingHeight = 7;
         for(int i = 0; i < blocks.GetLength(0); i++){
             int rand = Random.Range(0, 2);
-            int randomHeight = Random.Range(2, 5);
+            int randomHeight = Random.Range(3, 7);
 
             int height = startingHeight + randomHeight;
             startingHeight = height;
