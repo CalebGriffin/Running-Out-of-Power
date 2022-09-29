@@ -9,6 +9,7 @@ public class Blocks : MonoBehaviour
 
     private string position;
     public string Position {get {return position;} set {position = value;}}
+    public bool isLast = false;
 
 
     [SerializeField] private int id;

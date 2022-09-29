@@ -12,8 +12,20 @@ public class Manager : MonoBehaviour
         else Destroy(gameObject);
     }
     #endregion
-    [SerializeField] private Transform playerRef;
-    
+    [SerializeField] private int blocksFinished;
+    private void Start() {
+        blocksFinished = 0;
+    }
 
-    public Vector3 GetPlayerPosition() => playerRef.position;
+    public void UpdateBlockPositions(bool isFinished){
+        if(isFinished) blocksFinished++;
+
+        if(blocksFinished == 4) GameOver();
+    }
+
+    public void GameOver(){
+        Debug.Log("Game Over");
+    }
+
+
 }

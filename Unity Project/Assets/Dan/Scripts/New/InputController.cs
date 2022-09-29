@@ -25,7 +25,7 @@ public class InputController : MonoBehaviour
 
         // Do something with the input here
         activeContainer = inputVector.x < 0 ? container1 : container2;
-        transform.position = new Vector3(inputVector.x < 0 ? -5.5f : 5.5f, -1, 0);
+        transform.position = new Vector3(inputVector.x < 0 ? -5.5f : 5.5f, -1, -1);
     }
 
     private void OnSouth_Button()

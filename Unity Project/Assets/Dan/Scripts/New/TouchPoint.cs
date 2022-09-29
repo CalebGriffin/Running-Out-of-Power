@@ -28,8 +28,11 @@ public class TouchPoint : MonoBehaviour
                 Debug.Log("Incorrect");
             }
 
+        bool block = other.gameObject.GetComponent<Blocks>().isLast;
+        Manager.Instance.UpdateBlockPositions(block);
+
         //Set the blocks to inactive to avoid a missing reference exception
-        other.gameObject.SetActive(false); 
+        other.gameObject.SetActive(false);
         //if(inputController.ActiveContainer.CorrectBlockId()) Debug.Log("Correct");
         //else Debug.Log("Incorrect");
         

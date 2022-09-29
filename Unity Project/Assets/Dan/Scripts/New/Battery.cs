@@ -16,6 +16,10 @@ public class Battery : MonoBehaviour
     {
         batteryLife -= Time.deltaTime;
         transform.localScale = new Vector3(1, Mathf.Clamp01(batteryLife / 100), 1);
+
+        if(batteryLife <= 0){
+            Manager.Instance.GameOver();
+        }
     }
 
     public static void UpdateBatteryLife(float batteryValue) => batteryLife = Mathf.Clamp(batteryLife += batteryValue, 0, 100);

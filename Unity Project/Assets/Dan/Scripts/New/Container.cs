@@ -5,27 +5,26 @@ using UnityEngine;
 public class Container 
 {
     private float desiredPosition;
-    private Transform[,] blocks = new Transform[10, 2];
+    private Transform[,] blocks = new Transform[60, 2];
     public Container(float desiredPosition, float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
         this.desiredPosition = desiredPosition;
         CreateContainerBlocks(leftSide, rightSide, blueBlock, redBlock);
     }
 
     private void CreateContainerBlocks(float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
-        int previousHeight = 7;
+        int startingHeight = 7;
         for(int i = 0; i < blocks.GetLength(0); i++){
-            //Hardcoded testing purposes
-            //blocks[i, 0] = blueBlock;
-            //blocks[i, 1] = redBlock;
             int rand = Random.Range(0, 2);
             int randomHeight = Random.Range(2, 5);
-            ///Debug.Log(randomHeight);
-            //7
-            int height = (previousHeight + i) + (i * randomHeight);
-            previousHeight = height;
+
+            int height = startingHeight + randomHeight;
+            startingHeight = height;
+
             blocks[i, rand] = GameObject.Instantiate(blueBlock, new Vector2(rand == 0 ? leftSide : rightSide, height), Quaternion.identity);
             blocks[i, rand == 0 ? 1 : 0] = GameObject.Instantiate(redBlock, new Vector2(rand == 0 ? rightSide : leftSide, height), Quaternion.identity);
         }
+        blocks[blocks.GetLength(0) - 1, 0].GetComponent<Blocks>().isLast = true;
+        blocks[blocks.GetLength(0) - 1, 1].GetComponent<Blocks>().isLast = true;
     }
 
     public void SwitchBlocks(){
