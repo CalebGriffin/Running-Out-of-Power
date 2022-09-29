@@ -13,8 +13,14 @@ public class Manager : MonoBehaviour
     }
     #endregion
     [SerializeField] private int blocksFinished;
+    [SerializeField] private float speed;
+    [SerializeField] private float speedValue;
+    private float blockSpeedTimer = 10;
     private void Start() {
         blocksFinished = 0;
+    }
+    private void Update() {
+        speed += 1.5f * Time.deltaTime;
     }
 
     public void UpdateBlockPositions(bool isFinished){
@@ -27,5 +33,6 @@ public class Manager : MonoBehaviour
         Debug.Log("Game Over");
     }
 
+    public float GetSpeed() => speed;
 
 }

@@ -31,8 +31,6 @@ public class InputController : MonoBehaviour
     private void OnSouth_Button()
     {
         // This will run when the south button is pressed
-        
-        
         activeContainer.SwitchBlocks();
     }
 }

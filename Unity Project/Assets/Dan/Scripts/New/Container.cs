@@ -5,7 +5,7 @@ using UnityEngine;
 public class Container 
 {
     private float desiredPosition;
-    private Transform[,] blocks = new Transform[60, 2];
+    private Transform[,] blocks = new Transform[100, 2];
     public Container(float desiredPosition, float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
         this.desiredPosition = desiredPosition;
         CreateContainerBlocks(leftSide, rightSide, blueBlock, redBlock);
@@ -30,12 +30,10 @@ public class Container
     public void SwitchBlocks(){
         for (int i = 0; i < blocks.GetLength(0); i++)
         {
-            //Hardcoded testing purposes
+            //Swap the position of each object;
             Vector3 temp = blocks[i, 0].position;
             LeanTween.moveX(blocks[i, 0].gameObject, blocks[i, 1].position.x, 0.1f);
             LeanTween.moveX(blocks[i, 1].gameObject, temp.x, 0.1f);
-            //blocks[i, 0].position = blocks[i, 1].position;
-            //blocks[i, 1].position = temp;
         }
     }
     public bool AreBlocksPlacedCorrectly(float position) => desiredPosition == position ? true : false;

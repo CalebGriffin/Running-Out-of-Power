@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6726358234352164537}
-  speed: 100
+  speed: 50
+  isLast: 0
   id: 1
 --- !u!50 &6726358234352164537
 Rigidbody2D:

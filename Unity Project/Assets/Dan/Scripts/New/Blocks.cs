@@ -5,7 +5,7 @@ using UnityEngine;
 public class Blocks : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float speed;
+    //[SerializeField] private float speed;
 
     private string position;
     public string Position {get {return position;} set {position = value;}}
@@ -20,7 +20,7 @@ public class Blocks : MonoBehaviour
         //transform.position -= new Vector3(0, 2f * Time.deltaTime, 0);
     }
     private void FixedUpdate() {
-        rb.velocity = Vector2.down * speed * Time.deltaTime;
+        rb.velocity = Vector2.down * Manager.Instance.GetSpeed() * Time.deltaTime;
         
     }
 }
