@@ -7,6 +7,7 @@ public class WinConScript : MonoBehaviour
     private Countdown countdown;
     private GameObject Victory;
     private GameObject Defeat;
+    private bool You_Win;
 
     private void Awake()
     {
@@ -18,7 +19,7 @@ public class WinConScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (countdown.Time == 0)
+        if (countdown.Time <= 0 && You_Win == false)
         {
             Debug.Log("GameOver");
             Defeat.SetActive(true);
@@ -27,6 +28,7 @@ public class WinConScript : MonoBehaviour
         {
             Debug.Log("Victory");
             Victory.SetActive(true);
+            You_Win = true;
         }
     }
 }

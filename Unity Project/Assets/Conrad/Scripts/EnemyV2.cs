@@ -18,6 +18,8 @@ public class EnemyV2 : MonoBehaviour
     private bool bulletCooldown;
     private Vector3 Firingpoint;
     private Vector2 RayDirection;
+    public AudioClip Sound;
+    private AudioSource audio;
     public int Health
     {
         get
@@ -55,7 +57,9 @@ public class EnemyV2 : MonoBehaviour
 
     private void Awake()
     {
-        NonRayLayer = 9 | 0;
+        audio = GetComponent<AudioSource>();
+        Sound = Resources.Load<AudioClip>("laser5");
+        NonRayLayer = LayerMask.GetMask("Default") | LayerMask.GetMask("EnemyBlocker");
         Player = GameObject.Find("Character");
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         countdown = GameObject.Find("CountDown").GetComponent<Countdown>();
@@ -117,24 +121,29 @@ public class EnemyV2 : MonoBehaviour
         if (!(!MoveL && !MoveR))
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, RayDirection, 100f, NonRayLayer);
-            //Debug.DrawRay(transform.position, RayDirection, Color.red, 0.2f);
+            Debug.DrawRay(transform.position, RayDirection, Color.red, 0.2f);
             //Debug.Log(gameObject.transform.InverseTransformPoint(-2f, 0, 0));
 
             if (MoveL == true) { Firingpoint = gameObject.transform.TransformPoint(-1f, -0.25f, 0); }
             if (MoveR == true) { Firingpoint = gameObject.transform.TransformPoint(1f, -0.25f, 0); }
-            //Debug.Log(MoveL);
-            //Debug.Log(MoveR);
-            if (hit.collider.gameObject.tag == "Player" && bulletCooldown == false)
+            if (hit.collider != null)
             {
-                //Debug.Log(hit.collider.gameObject.name);
-                GameObject Bullet = Instantiate(bullet, Firingpoint, Quaternion.identity);
-                if (MoveL == true) { Bullet.GetComponent<Rigidbody2D>().AddForce(-Vector2.right * 2000f); }
-                if (MoveR == true) { Bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 2000f); }
-                bulletCooldown = true;
-            }
-            else if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject != null)
-            {
-                //Debug.Log(hit.collider.gameObject.name);
+                //Debug.Log(MoveL);
+                //Debug.Log(MoveR);
+                if (hit.collider.gameObject.tag == "Player" && bulletCooldown == false)
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                    GameObject Bullet = Instantiate(bullet, Firingpoint, Quaternion.identity);
+                    if (MoveL == true) { Bullet.GetComponent<Rigidbody2D>().AddForce(-Vector2.right * 2000f); }
+                    if (MoveR == true) { Bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 2000f); }
+                    bulletCooldown = true;
+                    Debug.Log(Sound.name);
+                    audio.PlayOneShot(Sound);
+                }
+                else if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject != null)
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                }
             }
         }
         
