@@ -39,50 +39,69 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!grounded)
+        switch (GameManager.Instance.GameState)
         {
-            if(Mathf.Abs(myRB.velocity.y) <= groundedVelocityThreshold)
-            {
-                groundedTimer += Time.deltaTime;
-            }
-            else
-            {
-                groundedTimer = 0;
-            }
+            case GameManager.GameStates.PLAYING:
+                if (!grounded)
+                {
+                    if (Mathf.Abs(myRB.velocity.y) <= groundedVelocityThreshold)
+                    {
+                        groundedTimer += Time.deltaTime;
+                    }
+                    else
+                    {
+                        groundedTimer = 0;
+                    }
 
-            if (groundedTimer >= groundedDurationThreshold)
-            {
-                grounded = true;
-                jumpCount = 0;
-                groundedTimer = 0;
-            }
-        }
-        else
-        {
-            if(Mathf.Abs(myRB.velocity.y) > groundedVelocityThreshold)
-            {
-                grounded = false;
-                groundedTimer = 0;
-            }
-        }
+                    if (groundedTimer >= groundedDurationThreshold)
+                    {
+                        grounded = true;
+                        jumpCount = 0;
+                        groundedTimer = 0;
+                    }
+                }
+                else
+                {
+                    if (Mathf.Abs(myRB.velocity.y) > groundedVelocityThreshold)
+                    {
+                        grounded = false;
+                        groundedTimer = 0;
+                    }
+                }
 
-        if(leftPressed)
-        {
-            gameObject.transform.position += (Vector3.left * speed * Time.deltaTime);
-        }
-        if (rightPressed)
-        {
-            gameObject.transform.position += (Vector3.right * speed * Time.deltaTime);
-        }
-        if (southPressed)
-        {
-            myRB.velocity = Vector2.Scale(myRB.velocity, new Vector2(1,0));
-            myRB.AddForce(Vector2.up * jumpForce);
-            
-            southPressed = false;
-        }
+                if (leftPressed)
+                {
+                    gameObject.transform.position += (Vector3.left * speed * Time.deltaTime);
+                }
+                if (rightPressed)
+                {
+                    gameObject.transform.position += (Vector3.right * speed * Time.deltaTime);
+                }
+                if (southPressed)
+                {
+                    myRB.velocity = Vector2.Scale(myRB.velocity, new Vector2(1, 0));
+                    myRB.AddForce(Vector2.up * jumpForce);
 
-        gameObject.transform.position -= (Vector3.down * playerGravity);
+                    southPressed = false;
+                }
+
+                gameObject.transform.position -= (Vector3.down * playerGravity);
+                break;
+            case GameManager.GameStates.LOADING_LEVEL:
+                break;
+            case GameManager.GameStates.PAUSED:
+                break;
+            case GameManager.GameStates.SWITCHING_FACE:
+                break;
+            case GameManager.GameStates.WIN:
+                break;
+            case GameManager.GameStates.GAME_OVER:
+                break;
+            case GameManager.GameStates.NUM_OF_STATES:
+            default:
+                break;
+        }
+        
     }
 
     private bool checkOutsideDeadband(float axis, float deadbandThreshold)
@@ -98,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case GameManager.GameStates.PLAYING:
                 // Get the Vector2 from the input value
-                
+
                 if (checkOutsideDeadband(inputVector.x, stickDeadbandThreshold))
                 {
                     if (inputVector.x < 0)
@@ -126,11 +145,15 @@ public class PlayerMovement : MonoBehaviour
                 leftPressed = false;
                 rightPressed = false;
                 break;
+            case GameManager.GameStates.LOADING_LEVEL:
+                leftPressed = false;
+                rightPressed = false;
+                break;
             case GameManager.GameStates.NUM_OF_STATES:
             default:
                 break;
         }
-        
+
 
     }
 
@@ -147,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
                     Debug.Log("Load Next Level");
                     SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).levelPlayed = true;
                     LevelLoader.Instance.StartTransition(CubeController.Instance.CurrentFaceLevel);
+                    GameManager.Instance.LoadingLevel = true;
                     return;
                 }
 
@@ -164,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case GameManager.GameStates.GAME_OVER:
                 LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU);
+                break;
+            case GameManager.GameStates.LOADING_LEVEL:
                 break;
             case GameManager.GameStates.NUM_OF_STATES:
             default:

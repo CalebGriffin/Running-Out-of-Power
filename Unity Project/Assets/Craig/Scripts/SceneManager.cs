@@ -24,6 +24,7 @@ public static class SceneManager
     private static SceneManager.Levels currentLevel = Levels.MENU;
     private static SceneManager.Levels previousLevel = Levels.MENU;
     private static bool levelsSet = false;
+    private static bool levelLoading = false;
 
     public static Levels CurrentLevel { get => currentLevel; }
     public static bool LevelsSet
@@ -35,6 +36,7 @@ public static class SceneManager
     }
 
     public static Levels PreviousLevel { get => previousLevel; }
+    public static bool LevelLoading { get => levelLoading; set => levelLoading = value; }
 
     public static LevelInfo GetLevelInfo(SceneManager.Levels level)
     {
@@ -48,6 +50,10 @@ public static class SceneManager
 
     public static void LoadLevel(SceneManager.Levels level, string displayText = "")
     {
+        // prevent people loading the menu twice through race conditions and causing spurious spawn points in the menu
+        if (levelLoading == true) return;
+        if(level == Levels.MENU) levelLoading = true;
+
         previousLevel = currentLevel;
         levels[(int)CurrentLevel].menuAchievementInfo = displayText;
         currentLevel = level;
