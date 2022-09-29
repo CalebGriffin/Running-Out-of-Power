@@ -117,7 +117,7 @@ public class EnemyV2 : MonoBehaviour
         if (!(!MoveL && !MoveR))
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, RayDirection, 100f, NonRayLayer);
-            Debug.DrawRay(transform.position, RayDirection, Color.red, 0.2f);
+            //Debug.DrawRay(transform.position, RayDirection, Color.red, 0.2f);
             //Debug.Log(gameObject.transform.InverseTransformPoint(-2f, 0, 0));
 
             if (MoveL == true) { Firingpoint = gameObject.transform.TransformPoint(-1f, -0.25f, 0); }

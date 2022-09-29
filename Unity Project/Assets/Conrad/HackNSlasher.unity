@@ -1958,7 +1958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attacking: 0
   ReadyToAttack: 0
-  Player: {fileID: 0}
+  Player: {fileID: 1642890994}
   damageCoolDown: 0
 --- !u!1 &1438622463
 GameObject:
@@ -2537,7 +2537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5552be4b7d1c2284897b657693a8e6e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextObject: {fileID: 0}
+  TextObject: {fileID: 1523974093}
   enemyNear: 0
   attack: {fileID: 0}
   attackcurrent: 0

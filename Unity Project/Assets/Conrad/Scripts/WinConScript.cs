@@ -26,7 +26,7 @@ public class WinConScript : MonoBehaviour
         else if (countdown.KillCount >= 6 && countdown.Time != 0)
         {
             Debug.Log("Victory");
-            Defeat.SetActive(true);
+            Victory.SetActive(true);
         }
     }
 }
