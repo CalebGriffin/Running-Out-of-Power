@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public enum GameStates
     {
         PLAYING = 0,
+        LOADING_LEVEL,
         PAUSED,
         SWITCHING_FACE,
         WIN,
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject player;
     private GameStates gameState = GameStates.PLAYING;
+    private bool loadingLevel = false;
 
     public static GameManager Instance
     {
@@ -38,15 +40,24 @@ public class GameManager : MonoBehaviour
     }
 
     public GameStates GameState { get => gameState; }
+    public bool LoadingLevel { get => loadingLevel; set => loadingLevel = value; }
+
+    private void Awake()
+    {
+        SceneManager.AddLevel("Menu", "Menu", "Navigate to the levels before the light runs out\n\nMove: Left stick\nJump: South Button\nLoad Level: South Button", "", 10);
+        SceneManager.AddLevel("Arrow Game", "ArrowGame", "Don't let the battery run out. Copy the arrows on the Left Stick. Red arrows should be reversed", "", 5);
+
+
+        SceneManager.LevelsSet = true;
+        SceneManager.LevelLoading = false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         LightFader playerLightFader;
 
-        SceneManager.AddLevel("Menu", "Menu", "Navigate to the levels before the light runs out\n\nMove: Left stick\nJump: South Button\nLoad Level: South Button", "",10);
-        SceneManager.AddLevel("Arrow Game", "ArrowGame", "Don't let the battery run out. Copy the arrows on the Left Stick. Red arrows should be reversed", "", 5);
-
+        
 
         player = SpawnPlayer();
         
@@ -63,6 +74,8 @@ public class GameManager : MonoBehaviour
         LevelInfo level = SceneManager.GetLevelInfo(SceneManager.Levels.MENU);
 
         UpdateInfo(level.name, level.menuDisplayInfo, level.menuAchievementInfo);
+
+        
 
     }
 
@@ -94,6 +107,8 @@ public class GameManager : MonoBehaviour
         if (this.levelFeedback != null) this.levelFeedback.text = levelInfo.menuAchievementInfo;
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -107,10 +122,14 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameStates.PLAYING:
-                if(LightingController.Instance.CurrentLightingState == LightingController.LightingState.LIGHTS_OFF)
+                if (LightingController.Instance.CurrentLightingState == LightingController.LightingState.LIGHTS_OFF)
                 {
                     gameState = GameStates.GAME_OVER;
                     levelFeedback.text = "Press South Button\nTo Restart";
+                }
+                else
+                {
+                    if (loadingLevel) gameState = GameStates.LOADING_LEVEL;
                 }
                 break;
             case GameStates.PAUSED:
@@ -120,6 +139,8 @@ public class GameManager : MonoBehaviour
             case GameStates.WIN:
                 break;
             case GameStates.GAME_OVER:
+                break;
+            case GameStates.LOADING_LEVEL:
                 break;
             case GameStates.NUM_OF_STATES:
             default:
