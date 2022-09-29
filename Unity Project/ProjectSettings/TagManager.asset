@@ -6,6 +6,11 @@ TagManager:
   tags:
   - blueBlock
   - LevelLoader
+  - Bullet
+  - Enemy
+  - Wall
+  - Attack
+  - EnemyBlocker
   layers:
   - Default
   - TransparentFX
@@ -15,12 +20,12 @@ TagManager:
   - UI
   - Menu_Sprites
   - Blocks
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Attack
+  - EnemyAttack
+  - Look
+  - Enemy
+  - EnemyBlocker
+  - Bullet
   - 
   - 
   - 
