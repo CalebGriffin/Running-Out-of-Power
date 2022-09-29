@@ -12,7 +12,7 @@ public class Container
     }
 
     private void CreateContainerBlocks(float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
-        
+        int previousHeight = 7;
         for(int i = 0; i < blocks.GetLength(0); i++){
             //Hardcoded testing purposes
             //blocks[i, 0] = blueBlock;
@@ -20,8 +20,9 @@ public class Container
             int rand = Random.Range(0, 2);
             int randomHeight = Random.Range(2, 5);
             ///Debug.Log(randomHeight);
-            
-            int height = 7 + (i * randomHeight);
+            //7
+            int height = (previousHeight + i) + (i * randomHeight);
+            previousHeight = height;
             blocks[i, rand] = GameObject.Instantiate(blueBlock, new Vector2(rand == 0 ? leftSide : rightSide, height), Quaternion.identity);
             blocks[i, rand == 0 ? 1 : 0] = GameObject.Instantiate(redBlock, new Vector2(rand == 0 ? rightSide : leftSide, height), Quaternion.identity);
         }

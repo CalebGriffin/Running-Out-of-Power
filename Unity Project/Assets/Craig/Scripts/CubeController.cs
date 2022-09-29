@@ -16,7 +16,8 @@ public class CubeController : MonoBehaviour
     [SerializeField] private float rotationAngle = 90.0f;
     [SerializeField] private float rotationLerpDuration = 3.0f;
     [SerializeField] private List<Vector3> rotationSequence;
-    [SerializeField] private List<Transform> spawnPoints;
+    [SerializeField] private List<Transform> startingSpawnPoints;
+    [SerializeField] private List<Transform> reentrySpawnPoints;
 
     private int rotationSequenceIndex = 0;
     private Vector3 eulerLerpOutput = Vector3.zero;
@@ -29,6 +30,8 @@ public class CubeController : MonoBehaviour
     private Vector3 positionEnd = Vector3.zero;
     private float rotationRate = 0.0f;
 
+    private SceneManager.Levels currentFaceLevel = SceneManager.Levels.LEVEL1;
+
     private CubeStates cubeState = CubeStates.STATIC;
     public CubeStates CubeState { get => cubeState; }
     public static CubeController Instance
@@ -40,7 +43,8 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    
+    public SceneManager.Levels CurrentFaceLevel { get => currentFaceLevel; }
+
     void Awake()
     {
 
@@ -90,12 +94,18 @@ public class CubeController : MonoBehaviour
             yield return null;
             transform.Rotate(rotationSequence[rotationSequenceIndex], Time.deltaTime * rotationRate);
         }
+
         cubeState = CubeStates.STATIC;
     }
 
     public Transform GetSpawnPoint()
     {
-        return spawnPoints[rotationSequenceIndex];
+        return startingSpawnPoints[rotationSequenceIndex];
+    }
+
+    public Transform GetReEntrySpawnPoint()
+    {
+        return reentrySpawnPoints[rotationSequenceIndex];
     }
 
     public void RotateNext()
@@ -117,6 +127,7 @@ public class CubeController : MonoBehaviour
 
         StartCoroutine(rotateFunc());
 
+        currentFaceLevel++;
         cubeState = CubeStates.ROTATING;
 
         //transform.RotateAround()

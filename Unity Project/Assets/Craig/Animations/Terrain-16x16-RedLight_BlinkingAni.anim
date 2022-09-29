@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Terrain-16x16-RedLight_Blink
+  m_Name: Terrain-16x16-RedLight_BlinkingAni
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0

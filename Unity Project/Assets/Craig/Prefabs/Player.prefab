@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8361043051129501502}
   - component: {fileID: 8361043051129501503}
+  - component: {fileID: 6570769305174024607}
   m_Layer: 6
   m_Name: Spot Light
   m_TagString: Untagged
@@ -45,8 +46,8 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2.2
   m_Range: 44.98
-  m_SpotAngle: 113
-  m_InnerSpotAngle: 4
+  m_SpotAngle: 115
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -93,6 +94,34 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &6570769305174024607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8361043051129501505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ac35835cdd0a741b94b8698ffda12a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLight: {fileID: 8361043051129501503}
+  affectIntensity: 0
+  affectSpotAngle: 1
+  minIntensity: 2.2
+  maxIntensity: 2.2
+  minSpotAngle: 10
+  maxSpotAngle: 115
+  startingIntensity: 0
+  startingSpotAngle: 0
+  flicker: 1
+  flickerTime: 4
+  flickerMinSpeed: 0.01
+  flickerMaxSpeed: 0.1
+  flickerMinIntensity: 0
+  flickerMaxIntensity: 2.2
+  currentState: 1
 --- !u!1 &8361043052114806145
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +198,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 4572384206971425947, guid: 25bbe467e2541904080789212f3c68b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -226,7 +255,11 @@ MonoBehaviour:
   speed: 1.5
   jumpForce: 300
   playerGravity: 0
+  groundedDurationThreshold: 0.1
+  groundedVelocityThreshold: 0.01
+  maxInAirJumps: 2
   stickDeadbandThreshold: 0.3
+  grounded: 0
 --- !u!61 &8361043052114806140
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -240,7 +273,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.01, y: -0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -251,8 +284,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.32}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.1, y: 0.22}
+  m_EdgeRadius: 0.06
 --- !u!50 &8361043052114806143
 Rigidbody2D:
   serializedVersion: 4
@@ -273,4 +306,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
