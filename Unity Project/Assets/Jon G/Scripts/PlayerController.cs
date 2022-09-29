@@ -7,10 +7,14 @@ public partial class PlayerController : MonoBehaviour
 {
 
     /* Player Input Reference */
-        private PlayerInput Player() { return GetComponent<PlayerInput>(); }
+        private PlayerInput Player()
+    { return GetComponent<PlayerInput>(); }
 
     /* Player Component References */
-        private Rigidbody2D RigidBody() { return GetComponent<Rigidbody2D>(); }
+        private Rigidbody2D RigidBody()
+    { return GetComponent<Rigidbody2D>(); }
+        private SpriteRenderer Sprite()
+    { return GetComponentInChildren<SpriteRenderer>(); }
 
     /* Enumerations*/
         [System.Serializable] private enum CurrentAction { Run, Jump, Flip }
@@ -18,19 +22,24 @@ public partial class PlayerController : MonoBehaviour
     /* Variables */ [Header("Variables")]
         [SerializeField] private float moveSpeed = 450f;
         [SerializeField] private float jumpForce = 15f;
+        [SerializeField] private Color baseColour = new Color(1, 1, 1, 1), runColour = new Color(0, 1, 0, 1), jumpColour = new Color(0, 0, 1, 1), flipColour = new Color(1, 0, 0, 1);
 
     /* Attributes */
-        private float MoveSpeed() { return Mathf.Abs(moveSpeed) * Time.fixedDeltaTime; }
-        private float Direction() { return !(flipped) ? 1f : -1f; }
+        private float MoveSpeed()
+    { return Mathf.Abs(moveSpeed) * 2f * RigidBody().mass * Time.fixedDeltaTime; }
+        private float Direction()
+    { return !(flipped) ? 1f : -1f; }
 
     /* Input Data */
-        private bool canGoLeft = false, canGoRight = false;
+        private bool canGoLeft = false, canGoRight = false, mustReset = false;
         private Coroutine leftRoutine, rightRoutine;
+        private Color CurrentColour()
+    { switch(currentAction) { case CurrentAction.Run: return runColour; case CurrentAction.Jump: return jumpColour; case CurrentAction.Flip: return flipColour; default: return baseColour;  } }
 
     /* States */
         private bool running = false;
         private bool flipped = false;
-        private uint powerLevel = 0;
+        private uint powerLevel = 3;
         private CurrentAction currentAction;
 
     /* Action Level Requirements */
@@ -46,6 +55,8 @@ public partial class PlayerController : MonoBehaviour
     private void OnLeft_Stick(InputValue value)
     {
         Vector2 inputVector = value.Get<Vector2>();
+
+        if (mustReset) { return; }
 
         if (inputVector.x >= 0.5f)
         { 

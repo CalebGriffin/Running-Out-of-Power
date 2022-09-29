@@ -460,7 +460,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 450
-  jumpForce: 50
+  jumpForce: 15
+  baseColour: {r: 1, g: 1, b: 1, a: 1}
+  runColour: {r: 0, g: 1, b: 0, a: 1}
+  jumpColour: {r: 0, g: 0, b: 1, a: 1}
+  flipColour: {r: 1, g: 0, b: 0, a: 1}
 --- !u!50 &1659293773
 Rigidbody2D:
   serializedVersion: 4
