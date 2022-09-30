@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Dan/Scenes/BossLevel.unity
     guid: f750c7684aa891d458fb2f1283e4546e
+  - enabled: 1
+    path: Assets/Jon G/Scenes/Jonathon's Scene.unity
+    guid: ae5c13f5b44780941952e54a617ed79e
+  - enabled: 1
+    path: Assets/Jon F/Scenes/GameScene.unity
+    guid: 49f9e3cef710ca446a13b3f4bd08acff
   m_configObjects: {}

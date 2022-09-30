@@ -49,11 +49,11 @@ public class GameManager : MonoBehaviour
         SceneManager.AddLevel("Arrow Game", "ArrowGame", "Don't let the battery run out. Copy the arrows on the Left Stick. Red arrows should be reversed", "", 5);
         SceneManager.AddLevel("James", "ArrowGame", "Level 2 Text", "", 10);
         //SceneManager.AddLevel("Level 3", "ArrowGame", "Level 3 Text", "", 12);
-        SceneManager.AddLevel("Jonathon", "ArrowGame", "Level 3 Text", "", 13);
+        SceneManager.AddLevel("Haywire Protocol", "Jonathon's Scene", "Your Robot buddy is low on power and must be manually controlled, Instruct the robot to do actions", "", 13);
         SceneManager.AddLevel("Sockets", "RossScene", "Maintain all sockets connected, don't let the power drain!\n\nLeft stick: Move Wire Gun\nA: Fire Laser to connect pair of sockets.", "", 7);
-        SceneManager.AddLevel("Jon", "ArrowGame", "Level 5 Text", "", 8.5f);
+        SceneManager.AddLevel("Core Collector", "GameScene", "Core Collector", "", 8.5f);
         SceneManager.AddLevel("Hack'N'Slasher", "HackNSlasher", "Hit enemies x3 to restore energy. Block bullets by charging at them.\n\nAttack / Dash: X or B", "", 12);
-        SceneManager.AddLevel("Dan", "ArrowGame", "Level 7 Text", "", 4);
+        SceneManager.AddLevel("Final Level", "BossLevel", "Match the falling blocks with the coloured columns\n\n Hold left stick to move platform, A to switch blocks", "", 4);
 
 
         SceneManager.LevelsSet = true;

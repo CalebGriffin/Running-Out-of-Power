@@ -45,6 +45,8 @@ public partial class PlayerController : MonoBehaviour
         private bool flipped = false;
         [HideInInspector] public uint powerLevel = 0;
         private CurrentAction currentAction;
+    private float duration = 25.0f;
+    private float timer = 0;
 
     /* Action Level Requirements */
         private uint runCost = 0;
@@ -59,6 +61,11 @@ public partial class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Run_Extension();
+        timer += Time.fixedDeltaTime;
+        if(timer >= duration)
+        {
+            LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, "You timed out!");
+        }
     }
     
     private void OnLeft_Stick(InputValue value)
