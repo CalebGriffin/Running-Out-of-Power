@@ -12,11 +12,14 @@ public class GameScript : MonoBehaviour
     //UI components.
     [SerializeField] Transform PowerMeter;
     [SerializeField] Text PowerText;
+    private float PowerFlash = 0.0f;
 
     [SerializeField] private GameObject SocketTemplate;
     [SerializeField] private GameObject WireTemplate;
 
     [SerializeField] private RectTransform Gamefield;
+    [SerializeField] private GameObject Win;
+    [SerializeField] private GameObject Gameover;
     [SerializeField] private Transform SocketParent;
     [SerializeField] private int totalSockets = 8; //How many sockets are there on the game board?
 
@@ -42,7 +45,7 @@ public class GameScript : MonoBehaviour
         private float lifeTime = 0.0f;
         private SocketObj[] sockets = new SocketObj[2];
 
-        private GameObject Wire; //The Wire in the actual game.
+        public GameObject Wire; //The Wire in the actual game.
 
         //Constructor
         public WireObj(GameObject WireGraphic, SocketObj socketA, SocketObj socketB)
@@ -113,9 +116,13 @@ public class GameScript : MonoBehaviour
 
 
 
-    // Start is called before the first frame update
-    void Start()
+    void InitializeGame()
     {
+
+        //Hide both the win and gameover screens.
+        Win.SetActive(false);
+        Gameover.SetActive(false);
+
 
         //Get the width of the rail, that way the clamp is automatic whenever the rail is changed...
         WireGunRailWidth = WireGun.parent.GetComponent<RectTransform>().rect.width * 0.5f - 32.0f;
@@ -123,6 +130,9 @@ public class GameScript : MonoBehaviour
         if (WireGunRailWidth < 0.0f)
             WireGunRailWidth = 0.0f;
 
+        //Reset the wiregun position and movement.
+        WireGun.transform.localPosition = new Vector3(0.0f, WireGun.transform.localPosition.y, 0.0f);
+        railDirection = 0.0f;
 
         //Reset the timer.
         TimeLeft = RoundTime;
@@ -130,6 +140,24 @@ public class GameScript : MonoBehaviour
         //Reset the power.
         Power = 100.0f;
 
+        //Clear the sockets and wires.
+        while (Sockets.Count > 0)
+        {
+
+            SocketObj socket = Sockets[0];
+            Destroy(socket.socket);
+            Sockets.Remove(socket);
+
+        }
+
+        while(Wires.Count > 0)
+        {
+
+            WireObj wire = Wires[0];
+            Destroy(wire.Wire);
+            Wires.Remove(wire);
+
+        }
 
         //Spawn in a bunch of random sockets, but first only allow divisible of 2, so there is always a pair of socket on the field regardless of config...
         int socketPairs = (totalSockets / 2) * 2;
@@ -139,7 +167,7 @@ public class GameScript : MonoBehaviour
 
         List<SocketObj> Remaining = new List<SocketObj>();
 
-        for(int x = 0; x < socketPairs; x++)
+        for (int x = 0; x < socketPairs; x++)
         {
 
             SocketObj newSocket = new SocketObj();
@@ -158,7 +186,7 @@ public class GameScript : MonoBehaviour
         }
 
         //Randomly pair all the wires up, so the player have a fair start.
-        while(Remaining.Count > 0)
+        while (Remaining.Count > 0)
         {
 
             SocketObj socketA = Remaining[Random.Range(0, Remaining.Count - 1)];
@@ -170,14 +198,25 @@ public class GameScript : MonoBehaviour
 
             //Same for socket B cuz now it will be used to make a wire.
             Remaining.Remove(socketB);
-            
+
             //Create our wire.
             Wires.Add(new WireObj(Instantiate(WireTemplate, SocketParent), socketA, socketB));
 
         }
 
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
 
+        InitializeGame();
+
+    }
+
+    private void OnEnable()
+    {
+        InitializeGame();
     }
 
     // Update is called once per frame
@@ -208,21 +247,42 @@ public class GameScript : MonoBehaviour
             //Resize the power meter!
             PowerMeter.transform.localScale = new Vector3(Power / 100.0f, 1.0f, 1.0f);
 
+            //Enable power warning text and make it flash.
+            if ((disconnectCount > 0))
+            {
+
+                float alpha = (Mathf.Sin(PowerFlash * 6.283184f) * 0.5f) + 0.5f;
+
+                PowerText.text = "WARNING! WARNING! WARNING!";
+                PowerText.color = new Color(1.0f, 0.0f, 0.0f, alpha);
+
+                PowerFlash += Time.deltaTime;
+                if (PowerFlash > 1.0f)
+                    PowerFlash -= 1.0f;
+            }
+            else
+            {
+                PowerText.text = "CHARGING...";
+                PowerText.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+            }
+
             //Decrease the timer left.
             TimeLeft -= Time.deltaTime;
 
         }
-        else
+        else if(!Win.activeSelf && !Gameover.activeSelf)
         {
 
             //Time's up or power is out, if there is still power then it means they reached here through time out.
             if(Power > 0.0f)
             {
                 //They won.
+                Win.SetActive(true);
             }
             else
             {
                 //They lost...
+                Gameover.SetActive(true);
             }
 
         }
