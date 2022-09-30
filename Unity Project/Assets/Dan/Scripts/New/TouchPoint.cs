@@ -20,11 +20,13 @@ public class TouchPoint : MonoBehaviour
         if(other.gameObject.CompareTag("blueBlock"))
             if(inputController.ActiveContainer.AreBlocksPlacedCorrectly(other.transform.position.x)){
                 Debug.Log("Correct");
+                Manager.Instance.CalculateAccuarcy(true);
                 Battery.UpdateBatteryLife(correctValue);
             }
             else{
                 Battery.UpdateBatteryLife(incorrectValue);
                 ScreenShake.Instance.Shake(4);
+                Manager.Instance.CalculateAccuarcy(false);
                 Debug.Log("Incorrect");
             }
 

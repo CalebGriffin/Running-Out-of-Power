@@ -5,7 +5,7 @@ using UnityEngine;
 public class Container 
 {
     private float desiredPosition;
-    private Transform[,] blocks = new Transform[100, 2];
+    private Transform[,] blocks = new Transform[60, 2];
     public Container(float desiredPosition, float leftSide, float rightSide, Transform blueBlock, Transform redBlock){
         this.desiredPosition = desiredPosition;
         CreateContainerBlocks(leftSide, rightSide, blueBlock, redBlock);
