@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Audio;
 
 public class EnemyV2 : MonoBehaviour
 {
@@ -18,8 +19,9 @@ public class EnemyV2 : MonoBehaviour
     private bool bulletCooldown;
     private Vector3 Firingpoint;
     private Vector2 RayDirection;
+    private AudioSource Audio;
+    [SerializeField]
     public AudioClip Sound;
-    private AudioSource audio;
     public int Health
     {
         get
@@ -57,8 +59,7 @@ public class EnemyV2 : MonoBehaviour
 
     private void Awake()
     {
-        audio = GetComponent<AudioSource>();
-        Sound = Resources.Load<AudioClip>("laser5");
+        Audio = GetComponent<AudioSource>();
         NonRayLayer = LayerMask.GetMask("Default") | LayerMask.GetMask("EnemyBlocker");
         Player = GameObject.Find("Character");
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
@@ -137,8 +138,7 @@ public class EnemyV2 : MonoBehaviour
                     if (MoveL == true) { Bullet.GetComponent<Rigidbody2D>().AddForce(-Vector2.right * 2000f); }
                     if (MoveR == true) { Bullet.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 2000f); }
                     bulletCooldown = true;
-                    Debug.Log(Sound.name);
-                    audio.PlayOneShot(Sound);
+                    Audio.PlayOneShot(Sound);
                 }
                 else if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject != null)
                 {
