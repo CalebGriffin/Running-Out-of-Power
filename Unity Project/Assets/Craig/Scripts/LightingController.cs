@@ -134,7 +134,8 @@ public class LightingController : MonoBehaviour
     {
         LIGHTS_OFF = 0,
         LIGHTS_ON,
-        LIGHTS_CHANGING,
+        LIGHTS_DIMMING,
+        LIGHTS_BRIGHTENING,
         NUM_OF_STATES
     }
 
@@ -168,10 +169,21 @@ public class LightingController : MonoBehaviour
         
         foreach(LightFader lightFader in lights)
         {
-            lightFader.StartLightBehaviour(duration);
+            lightFader.StartLightDimming(duration);
         }
         
-        currentLightingState = LightingState.LIGHTS_CHANGING;
+        currentLightingState = LightingState.LIGHTS_DIMMING;
+    }
+
+    public void SetLightsToIncrease(float duration)
+    {
+        if ((currentLightingState != LightingState.LIGHTS_DIMMING) && (currentLightingState != LightingState.LIGHTS_OFF) ) return;
+        foreach (LightFader lightFader in lights)
+        {
+            lightFader.StartLightBrightening(duration);
+        }
+
+        currentLightingState = LightingState.LIGHTS_BRIGHTENING;
     }
 
     public void ResetLights()
@@ -194,6 +206,16 @@ public class LightingController : MonoBehaviour
         ResetLights();
     }
 
+    public void SetLightsOff()
+    {
+        foreach (LightFader lightFader in lights)
+        {
+            lightFader.LightOff();
+        }
+
+        currentLightingState = LightingState.LIGHTS_DIMMING;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -203,22 +225,38 @@ public class LightingController : MonoBehaviour
                 break;
             case LightingState.LIGHTS_ON:
                 break;
-            case LightingState.LIGHTS_CHANGING:
-                int lightsCompleted = 0;
+            case LightingState.LIGHTS_DIMMING:
+                int lightsCompletedDimming = 0;
 
-                foreach(LightFader lightFader in lights)
+                foreach (LightFader lightFader in lights)
                 {
-                    
-                    if (lightFader.CurrentState == LightFader.LightState.LIGHT_OFF) lightsCompleted++;
+
+                    if (lightFader.CurrentState == LightFader.LightState.LIGHT_OFF) lightsCompletedDimming++;
                 }
 
-                if (lightsCompleted == lights.Count)
+                if (lightsCompletedDimming == lights.Count)
                 {
                     //menuText.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
                     menuText.fontSharedMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
                     currentLightingState = LightingState.LIGHTS_OFF;
                 }
 
+                break;
+            case LightingState.LIGHTS_BRIGHTENING:
+                int lightsCompletedBrightening = 0;
+
+                foreach (LightFader lightFader in lights)
+                {
+
+                    if (lightFader.CurrentState == LightFader.LightState.LIGHT_ON) lightsCompletedBrightening++;
+                }
+
+                if (lightsCompletedBrightening == lights.Count)
+                {
+                    //menuText.fontMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
+                    //menuText.fontSharedMaterial.SetFloat(ShaderUtilities.ID_GlowPower, 0.0f);
+                    currentLightingState = LightingState.LIGHTS_ON;
+                }
                 break;
             case LightingState.NUM_OF_STATES:
             default:

@@ -9,6 +9,7 @@ public class LightFader : MonoBehaviour
         LIGHT_OFF = 0,
         LIGHT_ON,
         LIGHT_FADING,
+        LIGHT_BRIGHTENING,
         LIGHT_FLICKERING,
         NUM_OF_STATES
     }
@@ -34,6 +35,8 @@ public class LightFader : MonoBehaviour
     private float lightDuration;
     private Coroutine flickerCoroutine;
     private float flickerTimer = 0.0f;
+    private Coroutine dimmingCoroutine;
+    private Coroutine brighteningCoroutine;
 
     public LightState CurrentState { get => currentState; }
 
@@ -73,11 +76,11 @@ public class LightFader : MonoBehaviour
 
                 break;
             case LightState.LIGHT_FLICKERING:
-                
-                if(flickerCoroutine != null)
+
+                if (flickerCoroutine != null)
                 {
                     flickerTimer += Time.deltaTime;
-                    if(flickerTimer > flickerTime)
+                    if (flickerTimer > flickerTime)
                     {
                         StopCoroutine(flickerCoroutine);
                         this.myLight.intensity = 0;
@@ -85,6 +88,8 @@ public class LightFader : MonoBehaviour
                     }
                 }
 
+                break;
+            case LightState.LIGHT_BRIGHTENING:
                 break;
             case LightState.NUM_OF_STATES:
             default:
@@ -109,7 +114,7 @@ public class LightFader : MonoBehaviour
         currentState = LightState.LIGHT_OFF;
     }
 
-    IEnumerator LerpLight()
+    IEnumerator LerpLightDim()
     {
         float timer = 0.0f;
 
@@ -150,12 +155,76 @@ public class LightFader : MonoBehaviour
 
     }
 
-    public void StartLightBehaviour(float duration)
+    IEnumerator LerpLightBrighten()
     {
-        if (currentState != LightState.LIGHT_ON) return;
+        float timer = 0.0f;
+        float currentIntensity = myLight.intensity;
+        float currentSpotAngle = myLight.spotAngle;
+
+        while (timer <= lightDuration)
+        {
+            timer += Time.deltaTime;
+
+            if (affectIntensity)
+            {
+                myLight.intensity = Mathf.Lerp(currentIntensity, startingIntensity, timer / lightDuration);
+            }
+            if (affectSpotAngle)
+            {
+                myLight.spotAngle = Mathf.Lerp(currentSpotAngle, startingSpotAngle, timer / lightDuration);
+            }
+
+            yield return null;
+        }
+
+        if (affectIntensity)
+        {
+            myLight.intensity = startingIntensity;
+        }
+        if (affectSpotAngle)
+        {
+            myLight.spotAngle = startingSpotAngle;
+        }
+
+        flickerTimer = 0;
+        currentState = LightState.LIGHT_ON;
+
+    }
+
+    public void StartLightDimming(float duration)
+    {
+        //if (currentState != LightState.LIGHT_ON) return;
+        if (brighteningCoroutine != null) StopCoroutine(brighteningCoroutine);
         lightDuration = duration;
-        StartCoroutine(LerpLight());
+        dimmingCoroutine = StartCoroutine(LerpLightDim());
         currentState = LightState.LIGHT_FADING;
+    }
+
+    public void StartLightBrightening(float duration)
+    {
+        //if (currentState != LightState.LIGHT_FADING) return;
+        if (dimmingCoroutine != null) StopCoroutine(dimmingCoroutine);
+        if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);
+        if ((affectIntensity == false) && (flicker == true)) myLight.intensity = startingIntensity;
+        lightDuration = duration;
+        brighteningCoroutine = StartCoroutine(LerpLightBrighten());
+        currentState = LightState.LIGHT_BRIGHTENING;
+    }
+
+    public void LightOff()
+    {
+        if (dimmingCoroutine != null) StopCoroutine(dimmingCoroutine);
+        if (flickerCoroutine != null) StopCoroutine(flickerCoroutine);
+        if (brighteningCoroutine != null) StopCoroutine(brighteningCoroutine);
+        if (affectIntensity)
+        {
+            myLight.intensity = minIntensity;
+        }
+        if (affectSpotAngle)
+        {
+            myLight.spotAngle = minSpotAngle;
+        }
+        currentState = LightState.LIGHT_OFF;
     }
 
     public void ResetLight()

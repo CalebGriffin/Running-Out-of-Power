@@ -12,6 +12,7 @@ TagManager:
   - Attack
   - EnemyBlocker
   - CubeRotator
+  - Bounds
   layers:
   - Default
   - TransparentFX

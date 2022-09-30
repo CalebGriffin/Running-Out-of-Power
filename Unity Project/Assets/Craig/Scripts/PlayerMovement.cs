@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundedDurationThreshold = 0.1f;
     [SerializeField] private float groundedVelocityThreshold = 0.01f;
     [SerializeField] private int maxInAirJumps = 2;
-
+    [SerializeField] private Vector2 boundsPos = Vector2.zero;
+   
 
 
     [SerializeField] private float stickDeadbandThreshold = 0.3f;
@@ -39,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if(transform.localPosition.y < yBounds)
+        //{
+        //    GameManager.Instance.ForcedGameOver();
+        //    transform.localPosition = new Vector2(transform.localPosition.x, yBounds);
+        //}
         switch (GameManager.Instance.GameState)
         {
             case GameManager.GameStates.PLAYING:
@@ -72,10 +78,12 @@ public class PlayerMovement : MonoBehaviour
                 if (leftPressed)
                 {
                     gameObject.transform.position += (Vector3.left * speed * Time.deltaTime);
+                    gameObject.GetComponent<SpriteRenderer>().flipX = true;
                 }
                 if (rightPressed)
                 {
                     gameObject.transform.position += (Vector3.right * speed * Time.deltaTime);
+                    gameObject.GetComponent<SpriteRenderer>().flipX = false;
                 }
                 if (southPressed)
                 {
@@ -96,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
             case GameManager.GameStates.WIN:
                 break;
             case GameManager.GameStates.GAME_OVER:
+                transform.parent = null;
+                transform.position = boundsPos;
                 break;
             case GameManager.GameStates.NUM_OF_STATES:
             default:
@@ -103,6 +113,8 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
+
+    
 
     private bool checkOutsideDeadband(float axis, float deadbandThreshold)
     {
@@ -187,7 +199,8 @@ public class PlayerMovement : MonoBehaviour
             case GameManager.GameStates.WIN:
                 break;
             case GameManager.GameStates.GAME_OVER:
-                LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU);
+                //LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU);
+                GameManager.Instance.Restart();
                 break;
             case GameManager.GameStates.LOADING_LEVEL:
                 break;
@@ -211,6 +224,16 @@ public class PlayerMovement : MonoBehaviour
             touchingLevelLoader = true;
             levelToLoad = other.GetComponent<LevelLoaderScreen>().LevelID;
             GameManager.Instance.UpdateInfo(SceneManager.GetLevelInfo(levelToLoad));
+        }
+        else if(other.tag == "CubeRotator")
+        {
+            GameManager.Instance.NextFace();
+        }
+        else if(other.tag == "Bounds")
+        {
+            boundsPos = other.transform.position;
+            GameManager.Instance.ForcedGameOver();
+            
         }
     }
 

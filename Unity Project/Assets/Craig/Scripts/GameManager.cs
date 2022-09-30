@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject playerLight;
     [SerializeField] private bool resetLights;
 
     [SerializeField] private TextMeshPro levelTitle;
@@ -46,6 +47,13 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.AddLevel("Menu", "Menu", "Navigate to the levels before the light runs out\n\nMove: Left stick\nJump: South Button\nLoad Level: South Button", "", 10);
         SceneManager.AddLevel("Arrow Game", "ArrowGame", "Don't let the battery run out. Copy the arrows on the Left Stick. Red arrows should be reversed", "", 5);
+        SceneManager.AddLevel("Level 2", "ArrowGame", "Level 2 Text", "", 10);
+        //SceneManager.AddLevel("Level 3", "ArrowGame", "Level 3 Text", "", 12);
+        SceneManager.AddLevel("Level 3", "ArrowGame", "Level 3 Text", "", 13);
+        SceneManager.AddLevel("Level 4", "ArrowGame", "Level 4 Text", "", 7);
+        SceneManager.AddLevel("Level 5", "ArrowGame", "Level 5 Text", "", 8.5f);
+        SceneManager.AddLevel("Level 6", "ArrowGame", "Level 6 Text", "", 12);
+        SceneManager.AddLevel("Level 7", "ArrowGame", "Level 7 Text", "", 4);
 
 
         SceneManager.LevelsSet = true;
@@ -57,10 +65,11 @@ public class GameManager : MonoBehaviour
     {
         LightFader playerLightFader;
 
-        
+
+        CubeController.Instance.SetCubeToLevel(SceneManager.PreviousLevel);
 
         player = SpawnPlayer();
-        
+
 
         playerLightFader = player.GetComponentInChildren<LightFader>();
 
@@ -75,8 +84,13 @@ public class GameManager : MonoBehaviour
 
         UpdateInfo(level.name, level.menuDisplayInfo, level.menuAchievementInfo);
 
-        
 
+
+    }
+
+    private void firstFrame()
+    {
+        
     }
 
     private GameObject SpawnPlayer()
@@ -90,6 +104,7 @@ public class GameManager : MonoBehaviour
         {
             spawnedPlayer = Instantiate(playerPrefab, CubeController.Instance.GetSpawnPoint());
         }
+        //spawnedPlayer.transform.parent = null;
         return spawnedPlayer;
     }
 
@@ -107,17 +122,49 @@ public class GameManager : MonoBehaviour
         if (this.levelFeedback != null) this.levelFeedback.text = levelInfo.menuAchievementInfo;
     }
 
-    
+    public void NextFace()
+    {
+        if (gameState == GameStates.SWITCHING_FACE) return;
+        gameState = GameStates.SWITCHING_FACE;
+        LightingController.Instance.SetLightsToIncrease(CubeController.Instance.RotationLerpDuration/2);
+        //player.SetActive(false);
+        player.GetComponent<Renderer>().enabled = false;
+        CubeController.Instance.RotateNext();
+    }
 
+    public void Restart()
+    {
+        //gameState = GameStates.GAME_OVER;
+        LightingController.Instance.ResetLights();
+        levelFeedback.text = SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).menuAchievementInfo;
+        //player.SetActive(false);
+        player.GetComponent<Renderer>().enabled = false;
+    }
+
+    public void ForcedGameOver()
+    {
+        LightingController.Instance.SetLightsOff();
+        gameState = GameStates.GAME_OVER;
+        levelFeedback.text = "Press South Button\nTo Restart";
+    }
+
+    //private bool firstFrameRun = false;
     // Update is called once per frame
     void Update()
     {
-        if(resetLights)
-        {
-            LightingController.Instance.ResetLights();
-            LightingController.Instance.SetLightsToReduce(SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).cubeFaceDuration);
-            resetLights = false;
-        }
+        //if(!firstFrameRun)
+        //{
+        //    firstFrame();
+        //    firstFrameRun = true;
+        //}
+        //if(resetLights)
+        //{
+        //    LightingController.Instance.ResetLights();
+        //    LightingController.Instance.SetLightsToReduce(SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).cubeFaceDuration);
+        //    resetLights = false;
+        //}
+
+        playerLight.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, playerLight.transform.position.z);
 
         switch (gameState)
         {
@@ -135,10 +182,29 @@ public class GameManager : MonoBehaviour
             case GameStates.PAUSED:
                 break;
             case GameStates.SWITCHING_FACE:
+                //player.transform.rotation = CubeController.Instance.gameObject.transform.rotation;
+                if(CubeController.Instance.CubeState == CubeController.CubeStates.STATIC)
+                {
+                    player.transform.position = CubeController.Instance.GetSpawnPoint().position;
+
+                    //player.SetActive(true);
+                    //player.GetComponent<Renderer>().enabled = true;
+                    Destroy(player);
+                    player = Instantiate(playerPrefab, CubeController.Instance.GetSpawnPoint());
+                    LightingController.Instance.SetLightsToReduce(SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).cubeFaceDuration);
+                    gameState = GameStates.PLAYING;
+                }
                 break;
             case GameStates.WIN:
                 break;
             case GameStates.GAME_OVER:
+                if(LightingController.Instance.CurrentLightingState == LightingController.LightingState.LIGHTS_ON)
+                {
+                    Destroy(player);
+                    player = Instantiate(playerPrefab, CubeController.Instance.GetSpawnPoint());
+                    LightingController.Instance.SetLightsToReduce(SceneManager.GetLevelInfo(CubeController.Instance.CurrentFaceLevel).cubeFaceDuration);
+                    gameState = GameStates.PLAYING;
+                }
                 break;
             case GameStates.LOADING_LEVEL:
                 break;
