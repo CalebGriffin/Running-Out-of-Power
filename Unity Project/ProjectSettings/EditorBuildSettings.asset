@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Caleb/Scenes/ArrowGame.unity
     guid: 25c20f22bbd4e40d19c31d66a02cf6e5
+  - enabled: 1
+    path: Assets/Conrad/HackNSlasher.unity
+    guid: 027791174a8d99d469361dda07fdd632
   m_configObjects: {}

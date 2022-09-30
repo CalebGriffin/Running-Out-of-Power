@@ -22,7 +22,7 @@ public static class SceneManager
     private static List<LevelInfo> levels = new List<LevelInfo>();
 
     private static SceneManager.Levels currentLevel = Levels.MENU;
-    private static SceneManager.Levels previousLevel = Levels.MENU;
+    private static SceneManager.Levels previousLevel = Levels.LEVEL6;
     private static bool levelsSet = false;
     private static bool levelLoading = false;
 

@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         SceneManager.AddLevel("Level 3", "ArrowGame", "Level 3 Text", "", 13);
         SceneManager.AddLevel("Level 4", "ArrowGame", "Level 4 Text", "", 7);
         SceneManager.AddLevel("Level 5", "ArrowGame", "Level 5 Text", "", 8.5f);
-        SceneManager.AddLevel("Level 6", "ArrowGame", "Level 6 Text", "", 12);
+        SceneManager.AddLevel("Hack'N'Slasher", "HackNSlasher", "Hit enemies x3 to restore energy. Block bullets by charging at them.\n\nAttack / Dash: X or B", "", 12);
         SceneManager.AddLevel("Level 7", "ArrowGame", "Level 7 Text", "", 4);
 
 
