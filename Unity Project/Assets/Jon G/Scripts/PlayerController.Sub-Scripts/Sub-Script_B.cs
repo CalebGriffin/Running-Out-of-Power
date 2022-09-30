@@ -17,17 +17,23 @@ public partial class PlayerController
 
         RigidBody().AddForce((new Vector2(MoveSpeed() * Direction(), 0f)) - RigidBody().velocity, ForceMode2D.Force);
     }
-
-    private void Action_Jump()
+    public void Action_Dash()
     {
-        if (powerLevel < jumpCost) { return; }
-        
+        RigidBody().AddForce(new Vector2(15f, 0f), ForceMode2D.Impulse);
+    }
+
+    public void Action_Jump(bool manual)
+    {
+        if ((powerLevel < jumpCost) && manual) { return; }
+
+        RigidBody().velocity = new Vector2(RigidBody().velocity.x, 0f);
         RigidBody().AddForce(new Vector2(0f, jumpForce * RigidBody().mass), ForceMode2D.Impulse);
     }
 
-    private void Action_Flip() 
+    public void Action_Flip(bool manual) 
     {
-        if (powerLevel < flipCost) { return; }
+
+        if ((powerLevel < flipCost) && manual) { return; }
 
         flipped = !(flipped);
     }
