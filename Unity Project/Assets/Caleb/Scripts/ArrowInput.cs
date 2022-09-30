@@ -19,6 +19,7 @@ public class ArrowInput : MonoBehaviour
     public int BatteryLife { get { return batteryLife; }}
 
     private bool arrowsMoving = false;
+    private bool gameOver = false;
 
     [SerializeField] private TextMeshProUGUI scoreText, batteryLifeText;
 
@@ -120,6 +121,8 @@ public class ArrowInput : MonoBehaviour
     {
         if (arrowsMoving)
             return;
+        if (gameOver)
+            return;
 
         // Get the Vector2 from the input value
         Vector2 inputVector = value.Get<Vector2>();
@@ -182,9 +185,9 @@ public class ArrowInput : MonoBehaviour
 
     private void IncorrectMove()
     {
-        if (batteryLife > 10)
+        if (batteryLife > 5)
         {
-            batteryLife -= 10;
+            batteryLife -= 5;
             UIUpdate();
         }
         else
@@ -199,7 +202,7 @@ public class ArrowInput : MonoBehaviour
 
     private void GameOver()
     {
-        //TODO: Talk to Craig about what to do when the game is over
+        gameOver = true;
         LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, $"You got a score of: {score}");
     }
 }
