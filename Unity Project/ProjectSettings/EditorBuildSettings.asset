@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Ross/Scenes/RossScene.unity
     guid: f75bb2fbb3b74514394a12a4bd7ff7d9
+  - enabled: 1
+    path: Assets/Dan/Scenes/BossLevel.unity
+    guid: f750c7684aa891d458fb2f1283e4546e
   m_configObjects: {}
