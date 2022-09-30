@@ -278,11 +278,17 @@ public class GameScript : MonoBehaviour
             {
                 //They won.
                 Win.SetActive(true);
+
+                LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, "All sockets repaired!");
+
             }
             else
             {
                 //They lost...
                 Gameover.SetActive(true);
+
+                //TODO: Talk to Craig about what to do when the game is over
+                LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, "Power drained, major systems offline...");
             }
 
         }
@@ -293,7 +299,7 @@ public class GameScript : MonoBehaviour
     private SocketObj FireWire()
     {
 
-        float minDist = Gamefield.rect.height - 224.0f;
+        float minDist = Gamefield.rect.height - 176.0f;
         SocketObj victim = null;
 
         foreach(SocketObj socket in Sockets)

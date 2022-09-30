@@ -47,13 +47,13 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.AddLevel("Menu", "Menu", "Navigate to the levels before the light runs out\n\nMove: Left stick\nJump: South Button\nLoad Level: South Button", "", 10);
         SceneManager.AddLevel("Arrow Game", "ArrowGame", "Don't let the battery run out. Copy the arrows on the Left Stick. Red arrows should be reversed", "", 5);
-        SceneManager.AddLevel("Level 2", "ArrowGame", "Level 2 Text", "", 10);
+        SceneManager.AddLevel("James", "ArrowGame", "Level 2 Text", "", 10);
         //SceneManager.AddLevel("Level 3", "ArrowGame", "Level 3 Text", "", 12);
-        SceneManager.AddLevel("Level 3", "ArrowGame", "Level 3 Text", "", 13);
-        SceneManager.AddLevel("Level 4", "ArrowGame", "Level 4 Text", "", 7);
-        SceneManager.AddLevel("Level 5", "ArrowGame", "Level 5 Text", "", 8.5f);
+        SceneManager.AddLevel("Jonathon", "ArrowGame", "Level 3 Text", "", 13);
+        SceneManager.AddLevel("Sockets", "RossScene", "Maintain all sockets connected, don't let the power drain!\n\nLeft stick: Move Wire Gun\nA: Fire Laser to connect pair of sockets.", "", 7);
+        SceneManager.AddLevel("Jon", "ArrowGame", "Level 5 Text", "", 8.5f);
         SceneManager.AddLevel("Hack'N'Slasher", "HackNSlasher", "Hit enemies x3 to restore energy. Block bullets by charging at them.\n\nAttack / Dash: X or B", "", 12);
-        SceneManager.AddLevel("Level 7", "ArrowGame", "Level 7 Text", "", 4);
+        SceneManager.AddLevel("Dan", "ArrowGame", "Level 7 Text", "", 4);
 
 
         SceneManager.LevelsSet = true;
