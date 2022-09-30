@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawn : MonoBehaviour
+public class SpawnCore : MonoBehaviour
 {
     public float maxTime = 2f;
     float timer;
-    public GameObject[] Enemy;
+    public GameObject Core;
     public float speed = 20;
     public float y;
-    GameObject newenemy;
+    GameObject newcore;
 
     // Update is called once per frame
     void Update()
@@ -20,10 +20,10 @@ public class EnemySpawn : MonoBehaviour
 
         if (timer > maxTime)
         {
-            GameObject newenemy = Instantiate(Enemy[Random.Range(0, Enemy.Length)], random, transform.rotation);
+            GameObject newcore = Instantiate(Core, random, transform.rotation);
             timer = 0;
-            Destroy(newenemy, 12f);
+            Destroy(newcore, 10f);
         }
-        Destroy(newenemy, 10f);
+        Destroy(newcore, 12f);
     }
 }

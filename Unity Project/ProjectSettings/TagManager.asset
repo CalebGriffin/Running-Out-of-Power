@@ -13,6 +13,8 @@ TagManager:
   - EnemyBlocker
   - CubeRotator
   - Bounds
+  - Ground
+  - Core
   layers:
   - Default
   - TransparentFX
