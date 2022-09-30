@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 6719369519014863492, guid: 4796aa7992f8c294b8198baef5d142e8, type: 3}
   bulletCooldown: 0
+  Sound: {fileID: 8300000, guid: f1e9bc04e9fb7be4494417074b76aeac, type: 3}
 --- !u!82 &6723668093145482635
 AudioSource:
   m_ObjectHideFlags: 0
@@ -160,7 +161,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cdd80923305c0f846a8f147cf894f83a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -23,12 +23,16 @@ public class WinConScript : MonoBehaviour
         {
             Debug.Log("GameOver");
             Defeat.SetActive(true);
+            LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, $"Battery Depleted \n Try Again");
         }
         else if (countdown.KillCount >= 6 && countdown.Time != 0)
         {
             Debug.Log("Victory");
             Victory.SetActive(true);
             You_Win = true;
+            LevelLoader.Instance.StartTransition(SceneManager.Levels.MENU, $"Victory");
         }
     }
+
+    
 }
